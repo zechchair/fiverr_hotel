@@ -1,0 +1,93 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Project "Project Name" {
+  database_type: 'PostgreSQL'
+  Note: 'Test project description'
+}
+
+Table booking {
+  id Int [pk, increment]
+  date_reservation DateTime [default: `now()`, not null]
+  date_confirmation DateTime
+  date_start DateTime [not null]
+  date_end DateTime [not null]
+  totalPrice Float [not null]
+  totalDays Int [not null]
+  clientId Int [not null]
+  client client [not null]
+  employeeId Int [not null]
+  employee user [not null]
+}
+
+Table room {
+  id Int [pk, increment]
+  price Float [not null]
+  capacity String [not null]
+  commodities String[] [not null]
+  vue String
+  extend Boolean [not null, default: false]
+  problems String[] [not null]
+  reserved Boolean [not null, default: false]
+  hotelId Int [not null]
+  hotel hotel [not null]
+}
+
+Table hotel {
+  id Int [pk, increment]
+  name String [not null]
+  stars Int [not null]
+  roomsN Int [not null, default: 0]
+  address String [not null]
+  phoneNumbers String[] [not null]
+  emails String[] [not null]
+  rooms room [not null]
+  managers user [not null]
+  hotelChainId Int [not null]
+  hotelChain hotelChain [not null]
+}
+
+Table hotelChain {
+  id Int [pk, increment]
+  name String [not null]
+  address String [not null]
+  hotelsN Int [not null, default: 0]
+  phoneNumbers String[] [not null]
+  emails String[] [not null]
+  hotels hotel [not null]
+}
+
+Table user {
+  id Int [pk, increment]
+  name String [not null]
+  address String [not null]
+  nas String [not null]
+  role user_role [not null, default: 'employee']
+  hotelId Int [not null]
+  hotel hotel [not null]
+  bookings booking [not null]
+}
+
+Table client {
+  id Int [pk, increment]
+  name String [not null]
+  address String [not null]
+  nas String [not null]
+  bookings booking [not null]
+}
+
+Enum user_role {
+  admin
+  employee
+}
+
+Ref: booking.clientId > client.id [delete: Cascade]
+
+Ref: booking.employeeId > user.id [delete: Cascade]
+
+Ref: room.hotelId > hotel.id [delete: Cascade]
+
+Ref: hotel.hotelChainId > hotelChain.id [delete: Cascade]
+
+Ref: user.hotelId > hotel.id [delete: Cascade]

@@ -7,25 +7,93 @@ datasource db {
   provider = "postgresql"
   url      = "postgresql://root:root@localhost:5432/ehotels"
 }
-
-model room {
-id  Int           @id @default(autoincrement())
-price Float
-capacity String 
-commodities String[]
-vue String?
-extend Boolean @default(false)
-problems String[]
-reserved Boolean @default(false)
+generator dbml {
+  provider = "prisma-dbml-generator"
+  output     = "../dbml"
+  outputName = "awesome.dbml"
+  projectName = "Project Name"
+  projectDatabaseType = "PostgreSQL"
+  projectNote = "Test project description"
 }
 
-model hotel{
-  id  Int           @id @default(autoincrement())
-name String
-stars Int
-roomsN Int
-address String
-phoneNumbers String[]
+// generator erd {
+//   provider = "prisma-erd-generator"
+//   output   = "../schema.pdf"
+// }
 
 
+model booking {
+  id                Int       @id @default(autoincrement())
+  date_reservation  DateTime  @default(now())
+  date_confirmation DateTime?
+  date_start        DateTime
+  date_end          DateTime
+  totalPrice        Float
+  totalDays         Int
+  clientId          Int
+  client            client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  employeeId        Int
+  employee          user      @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+}
+
+model room {
+  id          Int      @id @default(autoincrement())
+  price       Float
+  capacity    String
+  commodities String[]
+  vue         String?
+  extend      Boolean  @default(false)
+  problems    String[]
+  reserved    Boolean  @default(false)
+  hotelId     Int
+  hotel       hotel    @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+}
+
+model hotel {
+  id           Int        @id @default(autoincrement())
+  name         String
+  stars        Int
+  roomsN       Int        @default(0)
+  address      String
+  phoneNumbers String[]
+  emails       String[]
+  rooms        room[]
+  managers     user[]
+  hotelChainId Int
+  hotelChain   hotelChain @relation(fields: [hotelChainId], references: [id], onDelete: Cascade)
+}
+
+model hotelChain {
+  id           Int      @id @default(autoincrement())
+  name         String
+  address      String
+  hotelsN      Int      @default(0)
+  phoneNumbers String[]
+  emails       String[]
+  hotels       hotel[]
+}
+
+model user {
+  id      Int       @id @default(autoincrement())
+  name    String
+  address String
+  nas     String
+  role    user_role @default(employee)
+
+  hotelId  Int
+  hotel    hotel     @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  bookings booking[]
+}
+
+model client {
+  id       Int       @id @default(autoincrement())
+  name     String
+  address  String
+  nas      String
+  bookings booking[]
+}
+
+enum user_role {
+  admin
+  employee
 }
