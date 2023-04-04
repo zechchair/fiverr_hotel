@@ -29,14 +29,14 @@ export default function SearchElem(Props) {
 				<div className="flex-grow  ">
 					<Combobox
 						value={
-							Props.justOne ? (Props?.list ? Props?.list[Props.dataPrint] : query) : query
+							Props.justOne ? (Props?.list ? Props?.list[Props.dataPrint] : undefined) : query
 						}
 						// className="rounded-full"
 						onChange={async e => {
 							const matchFromData = Props?.dataList?.find((a: any) => a[Props.dataPrint] == e)
 							if (matchFromData) {
 								Props?.onAdd(matchFromData)
-								setQuery("")
+								Props.justOne? setQuery(undefined):setQuery("")
 								setOld("")
 							}
 							
