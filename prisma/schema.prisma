@@ -1,25 +1,20 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["referentialActions"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = "postgresql://root:root@localhost:5432/ehotels"
 }
-generator dbml {
-  provider = "prisma-dbml-generator"
-  output     = "../dbml"
-  outputName = "awesome.dbml"
-  projectName = "Project Name"
-  projectDatabaseType = "PostgreSQL"
-  projectNote = "Test project description"
-}
 
-// generator erd {
-//   provider = "prisma-erd-generator"
-//   output   = "../schema.pdf"
-// }
+generator dbml {
+  provider            = "prisma-dbml-generator"
+  output              = "../dbml"
+  outputName          = "ehotels.dbml"
+  projectName         = "E hotels"
+  projectDatabaseType = "PostgreSQL"
+  projectNote         = "HOtels management project"
+}
 
 
 model booking {
@@ -34,6 +29,20 @@ model booking {
   client            client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
   employeeId        Int
   employee          user      @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+}
+
+model archive {
+  id               Int       @id @default(autoincrement())
+  client           String?
+  employee         String?
+  hotel            String?
+  date_reservation DateTime?
+  date_confirmation DateTime?
+  date_start        DateTime?
+  date_end          DateTime?
+  totalPrice        Float
+  totalDays         Int
+  room String?
 }
 
 model room {

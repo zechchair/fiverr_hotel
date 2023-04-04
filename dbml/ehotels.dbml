@@ -2,9 +2,9 @@
 //// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 //// ------------------------------------------------------
 
-Project "Project Name" {
+Project "E hotels" {
   database_type: 'PostgreSQL'
-  Note: 'Test project description'
+  Note: 'HOtels management project'
 }
 
 Table booking {
