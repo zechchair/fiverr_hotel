@@ -12,10 +12,10 @@ model room {
 id  Int           @id @default(autoincrement())
 price Float
 capacity String 
-commodities Json?
+commodities String[]
 vue String?
 extend Boolean @default(false)
-problems Json?
+problems String[]
 reserved Boolean @default(false)
 }
 
