@@ -78,8 +78,8 @@ Table user {
   address String [not null]
   nas String [not null]
   role user_role [not null, default: 'employee']
-  hotelId Int [not null]
-  hotel hotel [not null]
+  hotelId Int
+  hotel hotel
   bookings booking [not null]
 }
 

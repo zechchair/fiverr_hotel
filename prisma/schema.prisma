@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://root:root@localhost:5432/ehotels"
+  url      = "postgresql://postgres:root@localhost:5432/ehotels"
 }
 
 generator dbml {
@@ -89,8 +89,8 @@ model user {
   nas     String
   role    user_role @default(employee)
 
-  hotelId  Int
-  hotel    hotel     @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  hotelId  Int?
+  hotel    hotel?     @relation(fields: [hotelId], references: [id], onDelete: Cascade)
   bookings booking[]
 }
 
