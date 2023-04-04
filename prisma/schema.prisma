@@ -4,64 +4,28 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = "mysql://root:@localhost:3306/new_db"
+  provider = "postgresql"
+  url      = "postgresql://root:root@localhost:5432/ehotels"
 }
 
-model accounts {
-  id                Int     @id @default(autoincrement())
-  username          String  @db.VarChar(50)
-  password          String  @db.VarChar(255)
-  tel               String  @db.VarChar(50)
-  Gruppenwallet     String? @default("0") @db.VarChar(200)
-  lastgruppenbetrag String  @default("0") @db.VarChar(20)
-  statusid          String  @default("1") @db.VarChar(4)
-  veri              Int     @default(0)
-  teamviewer        Int     @default(0)
-  bafin             Int     @default(1)
-  firstlogin        Int     @default(0)
+model room {
+id  Int           @id @default(autoincrement())
+price Float
+capacity String 
+commodities Json?
+vue String?
+extend Boolean @default(false)
+problems Json?
+reserved Boolean @default(false)
 }
 
-model gruppentransaktionen {
-  id             Int     @id @default(autoincrement())
-  kundennamen    String  @db.VarChar(1000)
-  summen         String  @db.VarChar(1000)
-  gruppenstatus  Int     @default(0)
-  kundenids      String  @db.VarChar(1000)
-  gruppenwallet  String  @default("0") @db.VarChar(100)
-  mitarbeiter    String  @db.VarChar(100)
-  exxerbtcbetrag String? @default("0") @db.VarChar(100)
-  belege         String  @default("0") @db.VarChar(4000)
-}
+model hotel{
+  id  Int           @id @default(autoincrement())
+name String
+stars Int
+roomsN Int
+address String
+phoneNumbers String[]
 
-model gruppenwallets {
-  id            Int    @id @default(0)
-  User          String @db.VarChar(20)
-  Gruppenwallet String @db.VarChar(200)
-}
 
-model loginlog {
-  id        Int      @id @default(autoincrement())
-  User      String   @db.VarChar(20)
-  Useragent String   @db.VarChar(200)
-  datum     DateTime @default(now()) @db.DateTime(0)
-  ip        String?  @db.VarChar(100)
-}
-
-model selfwallets {
-  id         Int    @id @default(autoincrement())
-  selfwallet String @db.VarChar(50)
-  used       Int    @default(0)
-}
-
-model transaktionen {
-  id            Int       @id @default(autoincrement()) @db.UnsignedInt
-  kunde         String    @db.VarChar(60)
-  summe         Decimal   @db.Decimal(30, 2)
-  empfangsdatum DateTime? @db.Date
-  transstat     String?   @db.VarChar(50)
-  wallet        String?   @default("0") @db.VarChar(100)
-  mitarbeiter   String?   @db.VarChar(50)
-  land          String    @db.VarChar(2)
-  belege        String?   @default("0") @db.VarChar(60000)
 }
