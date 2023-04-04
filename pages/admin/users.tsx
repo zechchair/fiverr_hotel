@@ -112,7 +112,7 @@ export default function Staff(props) {
 					<div className="flex items-center space-x-2">
 						<button
 							type="button"
-							className={"text-" + process.env.color + "-400"}
+							className={"text-purple-400"}
 							onClick={() => {
 								setShow(true)
 								setDf(undefined)
@@ -254,13 +254,13 @@ export default function Staff(props) {
 					delete={data?.filter(item => item.role == "admin").length > 1}
 				/>
 			</div>
-			<Pagination
+			{/* <Pagination
 				selected={selectedPage}
 				len={parseInt(((count - 0.1) / item_per_page) as any) + 1}
 				onChange={async newPg => {
 					goToPg(newPg)
 				}}
-			/>
+			/> */}
 
 			<Modal
 				show={show}

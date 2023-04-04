@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://postgres:root@localhost:5432/ehotels"
+  url      = "postgresql://root:root@localhost:5432/ehotels"
 }
 
 generator dbml {

@@ -80,7 +80,7 @@ export default function Input(Props) {
 								"absolute z-0 rounded-full h-20 w-20 top-0 left-0",
 								Props.image || createObjectURL != "/noimage.jpg"
 									? "ring-2 ring-green-600 border-4"
-									: "ring-4 ring-" + process.env.secondColor + "-300 animate-pulse",
+									: "ring-4 ring-blue-300 animate-pulse",
 							)}
 						>
 							<span></span>

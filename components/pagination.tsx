@@ -13,9 +13,7 @@ export default function Pagination(Props) {
 						<button
 							type="button"
 							className={
-								"h-8 w-8 mr-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer transform hover:scale-105 hover:bg-" +
-								process.env.color +
-								"-100" +
+								"h-8 w-8 mr-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer transform hover:scale-105 hover:bg-purple-100" +
 								(Props.selected > 1 ? "" : " invisible")
 							}
 							onClick={async () =>
@@ -46,8 +44,8 @@ export default function Pagination(Props) {
 							<div
 								className={cn(
 									Props.selected == 1
-										? "bg-" + process.env.color + "-600 text-white transform hover:scale-105"
-										: "transform hover:scale-105 hover:bg-" + process.env.color + "-100",
+										? "bg-purple-600 text-white transform hover:scale-105"
+										: "transform hover:scale-105 hover:bg-purple-100",
 									"w-8 md:flex justify-center items-center hidden  cursor-pointer leading-5 transition duration-150 ease-in  rounded-full",
 								)}
 								onClick={async () =>
@@ -71,7 +69,7 @@ export default function Pagination(Props) {
 							<div
 								className={cn(
 									Props.selected != 1 && Props.selected != Props.len
-										? "bg-" + process.env.color + "-600 text-white transform hover:scale-105 md:flex"
+										? "bg-purple-600 text-white transform hover:scale-105 md:flex"
 										: "",
 									"w-8  justify-center items-center hidden  cursor-pointer leading-5 transition duration-150 ease-in  rounded-full",
 								)}
@@ -92,8 +90,8 @@ export default function Pagination(Props) {
 								<div
 									className={cn(
 										Props.selected == Props.len
-											? "bg-" + process.env.color + "-600 text-white transform hover:scale-105"
-											: "transform hover:scale-105 hover:bg-" + process.env.color + "-100",
+											? "bg-purple-600 text-white transform hover:scale-105"
+											: "transform hover:scale-105 hover:bg-purple-100",
 										"w-8 md:flex justify-center items-center hidden  cursor-pointer leading-5 transition duration-150 ease-in  rounded-full",
 									)}
 									onClick={async () =>
@@ -109,9 +107,7 @@ export default function Pagination(Props) {
 						<button
 							type="button"
 							className={
-								"h-8 w-8 ml-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer transform hover:scale-105 hover:bg-" +
-								process.env.color +
-								"-100" +
+								"h-8 w-8 ml-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer transform hover:scale-105 hover:bg-purple-100" +
 								(Props.len > Props.selected ? "" : " invisible")
 							}
 							onClick={async () =>

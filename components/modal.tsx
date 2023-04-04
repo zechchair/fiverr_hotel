@@ -24,22 +24,14 @@ export default function Modal(Props) {
 				{/* HEADER */}
 				<div
 					className={
-						"flex justify-between p-2 bg-gradient-to-r from-" +
-						process.env.secondColor +
-						"-600 to-" +
-						process.env.secondColor +
-						"-200 rounded-t"
+						"flex justify-between p-2 bg-gradient-to-r from-blue-600 to-blue-200 rounded-t"
 					}
 				>
 					<div className="text-white md:text-2xl text-lg font-semibold">{Props.title}</div>
 					<button
 						type="button"
 						className={
-							"bg-" +
-							process.env.secondColor +
-							"-50 bg-opacity-500 h-6 w-6 rounded-md p-1 inline-flex items-center justify-center text-red-800 hover:text-" +
-							process.env.secondColor +
-							"-500 hover:bg-red-200 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-red-900  "
+							"bg-blue-50 bg-opacity-500 h-6 w-6 rounded-md p-1 inline-flex items-center justify-center text-red-800 hover:text-blue-500 hover:bg-red-200 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-red-900  "
 						}
 						onClick={Props.onClose}
 					>

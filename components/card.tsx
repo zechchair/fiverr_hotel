@@ -155,9 +155,7 @@ export default function Card(Props) {
 							) : null}
 							<img
 								className={
-									"mx-auto mt-2 sm:mt-4 sm:mb-2 h-20 w-20 rounded-full border-2 border-" +
-									process.env.secondColor +
-									"-600 border-opacity-75 shadow-lg"
+									"mx-auto mt-2 sm:mt-4 sm:mb-2 h-20 w-20 rounded-full border-2 border-blue-600 border-opacity-75 shadow-lg"
 								}
 								src={
 									elem[Props.image]

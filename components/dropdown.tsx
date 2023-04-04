@@ -7,11 +7,7 @@ export default function Dropdown(Props) {
     <div >
       <button
         className={
-          "inline-flex justify-center w-full px-3  py-1.5 lg:py-1.5 text-xs lg:text-sm font-medium text-white bg-" +
-          process.env.color +
-          "-400 rounded-full hover:bg-" +
-          process.env.color +
-          "-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+          "inline-flex justify-center w-full px-3  py-1.5 lg:py-1.5 text-xs lg:text-sm font-medium text-white bg-purple-400 rounded-full hover:bg-purple-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
         }
         onClick={() => setIsOpen(true)}
       >
@@ -92,60 +88,3 @@ export default function Dropdown(Props) {
     </div>
   );
 }
-
-// <Menu as="div" className="relative inline-block text-left">
-// 	<div>
-// 		<Menu.Button
-// 			className={
-// 				"inline-flex justify-center w-full px-3  py-1.5 lg:py-1.5 text-xs lg:text-sm font-medium text-white bg-" +
-// 				process.env.color +
-// 				"-400 rounded-full hover:bg-" +
-// 				process.env.color +
-// 				"-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-// 			}
-// 		>
-// 			<span>Filtres</span>
-// 			<svg
-// 				xmlns="http://www.w3.org/2000/svg"
-// 				className="h-4 w-4 my-auto ml-2"
-// 				fill="none"
-// 				viewBox="0 0 24 24"
-// 				stroke="currentColor"
-// 			>
-// 				<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-// 			</svg>
-// 		</Menu.Button>
-// 	</div>
-// 	<Transition
-// 		as={Fragment}
-// 		enter="transition ease-out duration-100"
-// 		enterFrom="transform opacity-0 scale-95"
-// 		enterTo="transform opacity-100 scale-100"
-// 		leave="transition ease-in duration-75"
-// 		leaveFrom="transform opacity-100 scale-100"
-// 		leaveTo="transform opacity-0 scale-95"
-// 	>
-// 		<Menu.Items as="div"
-// 			className={
-// 				"absolute z-20 bg-gray-50 right-0 md:w-" +
-// 				(Props?.width ? Props?.width : "56") +
-// 				" mt-2 origin-top-right w-56 bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-// 			}
-// 		>
-// 			<Menu.Item>
-// 			<div className="pb-2 py-2">
-// 				<div>{Props.children}</div>
-// 				<button
-// 					type="button"
-// 					className="text-sm float-right font-medium text-white py-1 px-3 my-4 mr-4 bg-green-500 rounded-full hover:bg-green-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-// 					onClick={() => {
-// 						Props.onClick()
-// 					}}
-// 				>
-// 					Filtrer
-// 				</button>
-// 			</div>
-// 			</Menu.Item>
-// 		</Menu.Items>
-// 	</Transition>
-// </Menu>

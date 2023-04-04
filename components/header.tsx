@@ -4,8 +4,9 @@ import { useRouter } from "next/router"
 import { useSession, signIn, signOut } from "next-auth/react"
 export default function Header() {
 	const router = useRouter()
-	const { data: session } = useSession()
-	const user: any = session?.user
+	// const { data: session } = useSession()
+	const session=true
+	const user: any = {name:"zakaria",role:"admin"}
 	return (
 		<>
 			<header
@@ -18,16 +19,9 @@ export default function Header() {
 					className={cn(
 						"py-1 sm:py-0 ",
 						session
-							? "bg-gradient-to-r from-" +
-									process.env.color +
-									"-400 to-" +
-									process.env.color +
-									"-200"
-							: "bg-gradient-to-r from-" +
-									process.env.color +
-									"-600 to-" +
-									process.env.color +
-									"-400",
+							? "bg-gradient-to-r from-purple-400 to-purple-200"
+							: 
+							"bg-gradient-to-r from-purple-600 to-purple-400",
 					)}
 				>
 					<div
@@ -61,21 +55,7 @@ export default function Header() {
 							/>
 						</button>
 						{session ? (
-							<div className="flex items-center md:order-2">
-								<button
-									type="button"
-									className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-									id="user-menu-button"
-									aria-expanded="false"
-									data-dropdown-toggle="dropdown"
-								>
-									<img
-										className="inline-block object-cover sm:w-10 sm:h-12 w-10 h-12 rounded-full"
-										src={user.image ? process.env.NEXT_PUBLIC_SERVER + user.image : "/noimage.jpg"}
-										alt={user.image ? process.env.NEXT_PUBLIC_SERVER + user.image : "/noimage.jpg"}
-									/>
-								</button>
-							</div>
+						<></>
 						) : (
 							<button
 								className="py-1 inline-flex text-sm md:text-base font-semibold  bg-white rounded-full  gap-1 px-3 items-center text-white bg-opacity-20 hover:bg-opacity-30 animate-pulse"

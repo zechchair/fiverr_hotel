@@ -4,7 +4,7 @@ interface PopUpInterface {
 	loader?: boolean
 	close?: boolean
 	type?: "info" | "success" | "danger" | "warning" | any
-	onClose: React.MouseEventHandler
+	onClose?: React.MouseEventHandler
 	children?: JSX.Element | any
 }
 export type { PopUpInterface }

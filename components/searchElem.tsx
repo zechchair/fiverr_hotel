@@ -87,7 +87,7 @@ export default function SearchElem(Props) {
 										Props.onNew && query ? (
 											<button
 												type="button"
-												className={"w-full flex justify-center text-" + process.env.color + "-500"}
+												className={"w-full flex justify-center text-purple-500"}
 												onClick={e => {
 													// if (Props.onNew) {
 													Props.onNew(query)

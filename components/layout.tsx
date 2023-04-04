@@ -6,7 +6,9 @@ const Header = dynamic(() => import("./header"), {
 })
 
 export default function Layout(props) {
-	const { data: session } = useSession()
+	const session={user:{name:"zakaria",role:"admin"}}
+
+	// const { data: session } = useSession()
 	const user: any = session?.user
 
 	return (

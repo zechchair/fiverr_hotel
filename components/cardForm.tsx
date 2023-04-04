@@ -16,7 +16,7 @@ export default function CardForm(Props) {
 						id={elem.id}
 						className={cn(
 							"relative  bg-gradient-to-b from-transparent via-gray-50 to-gray-100 rounded-lg shadow hover:shadow-lg cursor-pointer border-t-4 border-gray-400 mb-2 ",
-							Props?.selected === elem.id ? "border-" + process.env.color + "-600" : null,
+							Props?.selected === elem.id ? "border-purple-600" : null,
 						)}
 					>
 						{Props?.dropdown || Props?.update || Props?.onDelete ?
@@ -25,9 +25,7 @@ export default function CardForm(Props) {
 									<div>
 										<Menu.Button
 											className={
-												"rounded-full transition ease-in duration-200 p-1 hover:shadow hover:bg-" +
-												process.env.color +
-												"-100"
+												"rounded-full transition ease-in duration-200 p-1 hover:shadow hover:bg-purple-100"
 											}
 										>
 											<svg

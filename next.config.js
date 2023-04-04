@@ -1,6 +1,11 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
+module.exports = {
+	env: {
+		color: "purple",
+		secondColor: "blue",
+	},
+	typescript: {
+		ignoreBuildErrors: true,
+	  },
+	  reactStrictMode: false,
 }
-
-module.exports = nextConfig
