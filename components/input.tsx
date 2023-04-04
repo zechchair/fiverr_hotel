@@ -138,17 +138,17 @@ export default function Input(Props) {
 							>
 								<input
 									className="h-3 w-3 mr-0.5 self-center"
-									id={Props.id + lbl[Props.label]}
+									id={Props.id }
 									type="radio"
 									required={Props.required}
-									name={Props.children}
+									name={Props.id}
 									value={lbl["value"]}
 									checked={lbl["value"] == Props.select}
 									onChange={e => {
 										Props.onChange(e)
 									}}
 								/>
-								<label htmlFor={Props.id + lbl[Props.label]}>{lbl[Props.label]}</label>
+								<label htmlFor={Props.id }>{lbl[Props.label]}</label>
 							</div>
 						</>
 				  ))

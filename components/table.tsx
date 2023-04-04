@@ -110,7 +110,7 @@ export default function Table(props) {
 																</button>
 															) : (
 																<div
-																	className={props.cols[col]?.center ? "flex justify-center" : ""}
+																	className={cn(props.cols[col]?.center ? "flex justify-center" : "",props.cols[col]?.overflowHidden ? " max-w-xs truncate " : "",)}
 																>
 																	{element[col] ? (
 																		element[col]
@@ -123,9 +123,9 @@ export default function Table(props) {
 																			stroke="currentColor"
 																		>
 																			<path
-																				stroke-linecap="round"
-																				stroke-linejoin="round"
-																				stroke-width="1"
+																				strokeLinecap="round"
+																				strokeLinejoin="round"
+																				strokeWidth="1"
 																				d="M20 12H4"
 																			/>
 																		</svg>

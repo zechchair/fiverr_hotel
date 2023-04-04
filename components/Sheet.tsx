@@ -120,11 +120,11 @@ export default function Sheet(Props) {
 														fill="none"
 														viewBox="0 0 24 24"
 														stroke="currentColor"
-														stroke-width="2"
+														strokeWidth="2"
 													>
 														<path
-															stroke-linecap="round"
-															stroke-linejoin="round"
+															strokeLinecap="round"
+															strokeLinejoin="round"
 															d="M5 13l4 4L19 7"
 														/>
 													</svg>
@@ -135,11 +135,11 @@ export default function Sheet(Props) {
 														fill="none"
 														viewBox="0 0 24 24"
 														stroke="currentColor"
-														stroke-width="2"
+														strokeWidth="2"
 													>
 														<path
-															stroke-linecap="round"
-															stroke-linejoin="round"
+															strokeLinecap="round"
+															strokeLinejoin="round"
 															d="M6 18L18 6M6 6l12 12"
 														/>
 													</svg>
@@ -164,16 +164,16 @@ export default function Sheet(Props) {
 														fill="none"
 														viewBox="0 0 24 24"
 														stroke="currentColor"
-														stroke-width="2"
+														strokeWidth="2"
 													>
 														<path
-															stroke-linecap="round"
-															stroke-linejoin="round"
+															strokeLinecap="round"
+															strokeLinejoin="round"
 															d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
 														/>
 														<path
-															stroke-linecap="round"
-															stroke-linejoin="round"
+															strokeLinecap="round"
+															strokeLinejoin="round"
 															d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
 														/>
 													</svg>
@@ -232,11 +232,11 @@ export default function Sheet(Props) {
 																		fill="none"
 																		viewBox="0 0 24 24"
 																		stroke="currentColor"
-																		stroke-width="2"
+																		strokeWidth="2"
 																	>
 																		<path
-																			stroke-linecap="round"
-																			stroke-linejoin="round"
+																			strokeLinecap="round"
+																			strokeLinejoin="round"
 																			d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
 																		/>
 																	</svg>

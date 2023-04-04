@@ -1,6 +1,6 @@
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-
+import cn from "classnames"
 export default function Dropdown(Props) {
   let [isOpen, setIsOpen] = useState(false);
   return (
@@ -60,11 +60,10 @@ export default function Dropdown(Props) {
               >
                 <Dialog.Panel
 				as="div"
-                  className={
-                    "  bg-gray-50   md:w-" +
-                    (Props?.width ? Props?.width : "56") +
-                    " mt-2  w-56 bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                  }
+                  className={cn(
+                    "bg-gray-50 md:w-2/3 lg:w-1/3 mt-2 w-11/12 sm:w-2/3 bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+
+  )}
                 >
               
                   <div className="pb-2 py-2">

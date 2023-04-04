@@ -49,10 +49,11 @@ model room {
   id          Int      @id @default(autoincrement())
   price       Float
   capacity    String
+  N String
   commodities String[]
   vue         String?
   extend      Boolean  @default(false)
-  problems    String[]
+  problems    String?
   reserved    Boolean  @default(false)
   hotelId     Int
   hotel       hotel    @relation(fields: [hotelId], references: [id], onDelete: Cascade)
@@ -88,7 +89,8 @@ model user {
   address String
   nas     String
   role    user_role @default(employee)
-
+  username String @unique
+  password String
   hotelId  Int?
   hotel    hotel?     @relation(fields: [hotelId], references: [id], onDelete: Cascade)
   bookings booking[]

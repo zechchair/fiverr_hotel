@@ -29,28 +29,32 @@ export default function SearchElem(Props) {
 				<div className="flex-grow  ">
 					<Combobox
 						value={
-							Props.justOne ? (Props?.list ? Props?.list[Props.dataPrint] : undefined) : undefined
+							Props.justOne ? (Props?.list ? Props?.list[Props.dataPrint] : query) : query
 						}
 						// className="rounded-full"
 						onChange={async e => {
 							const matchFromData = Props?.dataList?.find((a: any) => a[Props.dataPrint] == e)
 							if (matchFromData) {
 								Props?.onAdd(matchFromData)
+								setQuery("")
+								setOld("")
 							}
-							setQuery(undefined)
+							
 						}}
 					>
 						<div className="  relative">
 							<div className="focus:outline-none   focus:ring-1 focus:border-blue-300 focus:ring-gray-200 border border-gray-200 rounded-md  w-full cursor-default overflow-hidden  text-left  sm:text-sm">
 								<Combobox.Input
 									className="w-full p-1.5 pl-3 pr-10 text-sm leading-5 text-gray-900   outline-none "
+									value={query}
 									onChange={event => {
 										setQuery(event.target.value)
 										const queryProv = event.target.value
 										const minCarac = Props?.minCarac ? Props?.minCarac : 1
-										if (queryProv?.length == minCarac && queryProv != old) {
+										if (queryProv?.length >= minCarac && queryProv != old) {
 											setOld(queryProv)
-											Props.onSearch(queryProv)
+											Props.onSearch?Props.onSearch(queryProv):undefined
+										
 										}
 									}}
 								/>
@@ -61,16 +65,17 @@ export default function SearchElem(Props) {
 										fill="none"
 										viewBox="0 0 24 24"
 										stroke="currentColor"
-										stroke-width="2"
+										strokeWidth="2"
 									>
 										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
+											strokeLinecap="round"
+											strokeLinejoin="round"
 											d="M19 13l-7 7-7-7m14-8l-7 7-7-7"
 										/>
 									</svg>
 								</Combobox.Button>
 							</div>
+							{query?
 							<Transition
 								as={Fragment}
 								leave="transition ease-in duration-100"
@@ -78,7 +83,7 @@ export default function SearchElem(Props) {
 								leaveTo="opacity-0"
 								afterLeave={() => setQuery(undefined)}
 							>
-								<Combobox.Options className="focus:outline-none mx-auto md:mx-3   border-b border-l border-r shadow-md border-gray-300  absolute z-10 bg-white text-black font-bold  max-h-36 w-full overflow-y-auto rounded-b-xl   py-1 text-2xs xs:text-xs sm:text-xs md:text-sm ">
+								<Combobox.Options className="   border-b border-l border-r shadow-md border-gray-300 w-full absolute z-10 bg-white text-left text-black font-bold  max-h-36  overflow-y-auto rounded-b-xl   py-1 text-2xs xs:text-xs sm:text-xs md:text-sm ">
 									{!Props?.dataList?.filter(item =>
 										item[Props.dataPrint]
 											?.toUpperCase()
@@ -92,7 +97,8 @@ export default function SearchElem(Props) {
 													// if (Props.onNew) {
 													Props.onNew(query)
 													// }
-													setQuery(undefined)
+													setQuery("")
+													setOld("")
 												}}
 											>
 												<svg
@@ -117,11 +123,11 @@ export default function SearchElem(Props) {
 													fill="none"
 													viewBox="0 0 24 24"
 													stroke="currentColor"
-													stroke-width="2"
+													strokeWidth="2"
 												>
 													<path
-														stroke-linecap="round"
-														stroke-linejoin="round"
+														strokeLinecap="round"
+														strokeLinejoin="round"
 														d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
 													/>
 												</svg>
@@ -160,11 +166,11 @@ export default function SearchElem(Props) {
 																		fill="none"
 																		viewBox="0 0 24 24"
 																		stroke="currentColor"
-																		stroke-width="2"
+																		strokeWidth="2"
 																	>
 																		<path
-																			stroke-linecap="round"
-																			stroke-linejoin="round"
+																			strokeLinecap="round"
+																			strokeLinejoin="round"
 																			d="M5 13l4 4L19 7"
 																		/>
 																	</svg>
@@ -177,7 +183,7 @@ export default function SearchElem(Props) {
 											))
 									)}
 								</Combobox.Options>
-							</Transition>
+							</Transition>:undefined}
 						</div>
 					</Combobox>
 				</div>

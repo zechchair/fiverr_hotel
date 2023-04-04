@@ -39,10 +39,11 @@ Table room {
   id Int [pk, increment]
   price Float [not null]
   capacity String [not null]
+  N String [not null]
   commodities String[] [not null]
   vue String
   extend Boolean [not null, default: false]
-  problems String[] [not null]
+  problems String [not null]
   reserved Boolean [not null, default: false]
   hotelId Int [not null]
   hotel hotel [not null]
@@ -78,6 +79,8 @@ Table user {
   address String [not null]
   nas String [not null]
   role user_role [not null, default: 'employee']
+  username String [unique, not null]
+  password String [not null]
   hotelId Int
   hotel hotel
   bookings booking [not null]

@@ -3,8 +3,6 @@ import Dropdown from "../../components/dropdown"
 import Input from "../../components/input"
 import Modal from "../../components/modal"
 import Pagination from "../../components/pagination"
-import { Prisma } from "@prisma/client"
-import prisma from "../../lib/prisma"
 import { useEffect, useState } from "react"
 import { fetcher } from "../../utils/fetcher"
 import cn from "classnames"
@@ -13,6 +11,7 @@ import Card from "../../components/card"
 import PopUp from "../../components/popup"
 import PopUpBtn from "../../components/popupbtn"
 import { isMobile } from "react-device-detect"
+import { Prisma } from "@prisma/client"
 
 const database = "user"
 const item_per_page: number = 10;
@@ -36,15 +35,15 @@ export default function Staff(props) {
 	const [df, setDf] = useState<any>(undefined)
 	const [data, setData] = useState<any[]>(props.initialData)
 	// const { data: session ,status} = useSession({required:true})
-	// const user: any = session?.user
+	const session={user:{name:"zakaria",role:"admin"}}
+
+	const user: any = session?.user
     const status: string = "good";
-	const user: any = { 'role': "admin" }
 	var labels_droits = [
 		{ name: "admin", value: "admin" },
+		{ name: "employee", value: "employee" },
 	]
-	if (user?.role == "admin") {
-		labels_droits = [...labels_droits, { name: "ADMIN", value: "admin" }]
-	}
+
 	useEffect(() => {
 		if (status !== "loading") {	
 			goToPg()
@@ -56,8 +55,8 @@ export default function Staff(props) {
 			take: item_per_page,
 			skip: item_per_page * (newPg - 1),
 			where: {
-				name: { contains: filter.name ? filter.name : undefined },
-				address: { contains: filter.address ? filter.address : undefined },
+				name: { contains: filter.name ? filter.name : undefined, mode: 'insensitive', },
+				address: { contains: filter.address ? filter.address : undefined , mode: 'insensitive',},
 				role: filter?.role != "all" ? filter.role : { in: labels_droits.map(item => item.value) },
 			},
 			orderBy: [
@@ -87,7 +86,7 @@ export default function Staff(props) {
 				show: false,
 			}),
 		]).then(array => {
-            console.log(array);
+			console.log(array[2])
 			setCount(array[1])
 			if (!array[2].code) {
 				if (isMobile && newPg - 1) {
@@ -179,7 +178,6 @@ export default function Staff(props) {
 					image="image"
 					data={data?.map(item => ({
 						...item,
-						beneficiaireU: item?.beneficiaire?.map(person => person.name),
 						roleU: labels_droits.find(elem => elem.value == item.role)?.name,
 					}))}
 					title="name"
@@ -187,25 +185,15 @@ export default function Staff(props) {
 					labels="beneficiaireU"
 					first="Modifier"
 					info={elem =>
-						elem.role == "aux1" ? (
-							<>
-								<div className="text-sm text-gray-700 font-bold mb-1"> Bénéficiaires :</div>
+						elem.hotel?<>
+								<div className="text-sm text-gray-700 font-bold mb-1"> Hotel :</div>
 								<div className="flex flex-col gap-1 items-start justify-center">
-									{elem?.beneficiaire?.map(item => (
 										<span className="bg-purple-200 rounded-full text-xs px-2 py-px">
-											{item.name}
+											{elem.hotel.name}
 										</span>
-									))}
 								</div>
-							</>
-						) : elem.role == "medecin" ? (
-							<>
-								<div className="text-sm text-gray-700 font-bold mb-1"> Specialité :</div>
-								<div className="text-xs text-purple-500 font-bold "> {elem.speciality}</div>
-							</>
-						) : (
-							false
-						)
+							</>:null
+						
 					}
 					onFirst={elem => {
 						setShow(true)
@@ -218,49 +206,50 @@ export default function Staff(props) {
 						}
 					}}
 					onDelete={async elem => {
-						// setPopUp({
-						// 	...popUp,
-						// 	show: true,
-						// 	loader: false,
-						// 	children: "Vous allez éffectuer une suppression",
-						// 	typeButton: true,
-						// 	function: async function () {
-						// 		const body: Prisma.usersDeleteArgs = {
-						// 			where: {
-						// 				id: elem.id,
-						// 			},
-						// 		}
-						// 		const res = await fetcher("/api/delete/" + database, body, setPopUp)
-						// 		if (!res.code) {
-						// 			setData(data.filter(item => item.id != res.id))
-						// 			setPopUp({
-						// 				show: true,
-						// 				loader: false,
-						// 				type: "success",
-						// 				children: "Votre operation a été bien éffectuée",
-						// 			})
-						// 		} else {
-						// 			setPopUp({
-						// 				...popUp,
-						// 				show: true,
-						// 				loader: false,
-						// 				type: "danger",
-						// 				children: "Veuillez vérifier vos informations ou réessayer plus tard",
-						// 			})
-						// 		}
-						// 	},
-						// })
+						setPopUp({
+							...popUp,
+							show: true,
+							loader: false,
+							children: "Vous allez éffectuer une suppression",
+							typeButton: true,
+							function: async function () {
+								const body: Prisma.userDeleteArgs = {
+									where: {
+										id: elem.id,
+									},
+								}
+								const res = await fetcher("/api/delete/" + database, body, setPopUp)
+								if (!res.code) {
+									setData(data.filter(item => item.id != res.id))
+									setPopUp({
+										show: true,
+										loader: false,
+										type: "success",
+										children: "Votre operation a été bien éffectuée",
+									})
+								} else {
+									setPopUp({
+										...popUp,
+										show: true,
+										loader: false,
+										type: "danger",
+										children: "Veuillez vérifier vos informations ou réessayer plus tard",
+									})
+								}
+							},
+						})
 					}}
 					delete={data?.filter(item => item.role == "admin").length > 1}
 				/>
 			</div>
-			{/* <Pagination
+			<Pagination
 				selected={selectedPage}
 				len={parseInt(((count - 0.1) / item_per_page) as any) + 1}
 				onChange={async newPg => {
 					goToPg(newPg)
 				}}
-			/> */}
+				// children={undefined}
+			/>
 
 			<Modal
 				show={show}
@@ -274,112 +263,87 @@ export default function Staff(props) {
 					className="rounded px-8 sm:px-12 py-8"
 					onSubmit={async e => {
 						e.preventDefault()
-						// setPopUp({
-						// 	...popUp,
-						// 	show: true,
-						// 	loader: false,
-						// 	children: "Etes vous sur d'effectuer cette operation",
-						// 	typeButton: true,
-						// 	function: async function () {
-						// 		var imageInfo = { error: true, url: null }
-						// 		setPopUp({
-						// 			typeButton: false,
-						// 			loader: true,
-						// 			show: true,
-						// 		})
-						// 		if (uploadedImage) {
-						// 			const formdata = new FormData()
-						// 			formdata.append("file", uploadedImage)
-						// 			const resp = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/upload.php`, {
-						// 				method: "POST",
-						// 				body: formdata,
-						// 			})
-						// 			imageInfo = await resp.json()
-						// 			if (imageInfo.error) {
-						// 				setPopUp({
-						// 					...popUp,
-						// 					show: true,
-						// 					loader: false,
-						// 					type: "danger",
-						// 					children: "L'image n'a pas pu telechargée",
-						// 				})
-						// 			}
-						// 		}
+						setPopUp({
+							...popUp,
+							show: true,
+							loader: false,
+							children: "Etes vous sur d'effectuer cette operation",
+							typeButton: true,
+							function: async function () {
+								setPopUp({
+									typeButton: false,
+									loader: true,
+									show: true,
+								})
+								
 
-						// 		const body: Prisma.usersUpsertArgs = {
-						// 			where: {
-						// 				id: df?.id ? df?.id : 0,
-						// 			},
-						// 			create: {
-						// 				name: df?.name,
-						// 				username: df?.username,
-						// 				image: !imageInfo.error ? imageInfo.url : undefined,
-						// 				pwd: df?.pwd,
-						// 				address: df?.address,
-						// 				role: df?.role,
-						// 				speciality: df?.speciality,
-						// 				phoneNumber: df?.phoneNumber,
-						// 				email: df?.email,
-						// 				beneficiaire: {
-						// 					connect: df?.beneficiaire?.map(person => ({ id: person.id })),
-						// 				},
-						// 			},
-						// 			update: {
-						// 				name: df?.name,
-						// 				username: df?.username,
-						// 				image: !imageInfo.error ? imageInfo.url : undefined,
-						// 				pwd: df?.pwd,
-						// 				address: df?.address,
-						// 				speciality: df?.speciality,
-						// 				role: df?.role,
-						// 				phoneNumber: df?.phoneNumber,
-						// 				email: df?.email,
-						// 				beneficiaire: {
-						// 					set: df?.beneficiaire?.map(person => ({ id: person.id })),
-						// 				},
-						// 			},
-						// 			include: {
-						// 				beneficiaire: true,
-						// 				rendezVous: true,
-						// 			},
-						// 		}
+								const body: Prisma.userUpsertArgs = {
+									where: {
+										id: df?.id ? df?.id : 0,
+									},
+									create: {
+										name: df?.name,
+										username: df?.username,
+										password: df?.password,
+										address: df?.address,
+										role: df?.role,
+										nas: df?.nas,
+										hotel: df?.hotel?.id  ? {
+											connect: { id: df?.hotel?.id },
+										}:undefined	
+									},
+									update: {
+										name: df?.name,
+										username: df?.username,
+										password: df?.password,
+										address: df?.address,
+										role: df?.role,
+										nas: df?.nas,
+										hotel: df?.hotel?.id  ? {
+											connect: { id: df?.hotel?.id },
+										}:undefined
+										,									},
+									include: {
+										hotel: true,
+									},
+								}
 
-						// 		const res = await fetcher("/api/upsert/" + database, body, setPopUp)
-						// 		if (!res.code) {
-						// 			setData([
-						// 				...data
-						// 					.filter(item => item.id != res.id)
-						// 					.slice(0, isMobile ? undefined : item_per_page - 1),
-						// 				res,
-						// 			])
-						// 			setStep(1)
-						// 			setShow(false)
-						// 			setPopUp({
-						// 				show: true,
-						// 				loader: false,
-						// 				type: "success",
-						// 				children: "Votre operation a été bien éffectuée",
-						// 			})
-						// 			setShow(false)
-						// 			setUploadedImage(null)
-						// 		} else {
-						// 			setPopUp({
-						// 				...popUp,
-						// 				show: true,
-						// 				loader: false,
-						// 				type: "danger",
-						// 				children: "Veuillez vérifier vos informations ou réessayer plus tard",
-						// 			})
-						// 		}
-						// 	},
-						// })
+								const res = await fetcher("/api/upsert/" + database, body, setPopUp)
+								if (!res.code) {
+									setData([
+										...data
+											.filter(item => item.id != res.id)
+											.slice(0, isMobile ? undefined : item_per_page - 1),
+										res,
+									])
+									setStep(1)
+									setShow(false)
+									setPopUp({
+										show: true,
+										loader: false,
+										type: "success",
+										children: "Votre operation a été bien éffectuée",
+									})
+									setShow(false)
+									setUploadedImage(null)
+								} else {
+									setPopUp({
+										...popUp,
+										show: true,
+										loader: false,
+										type: "danger",
+										children: "Veuillez vérifier vos informations ou réessayer plus tard",
+									})
+								}
+							},
+						})
 					}}
 				>
 					<div className="grid md:grid-cols-2 md:gap-5 gap-3 mb-8">
-						{step == 1 ? (
-							<div className="col-span-2">
-								<Input
-									labels={labels_droits.filter(item => item.value != "addict" || !df.id)}
+						
+							<>
+							<Input
+									labels={labels_droits}
 									label={["name"]}
 									type="select"
 									name="list_droits"
@@ -387,14 +351,11 @@ export default function Staff(props) {
 									placeholder={df?.role}
 									value="value"
 									onChange={e => {
-										setDf({ ...df, role: e.target.value })
+										setDf({ ...df, role: e.target.value ,hotel:undefined})
 									}}
 								>
 									Droits :
 								</Input>
-							</div>
-						) : (
-							<>
 								<Input
 									type="text"
 									required
@@ -410,9 +371,7 @@ export default function Staff(props) {
 								>
 									Nom - prénom :
 								</Input>
-								<div className="row-span-3 ">
-									<Input type="image" setUploadedImage={setUploadedImage} image={df?.image}></Input>
-								</div>
+								
 								<Input
 									required
 									type="text"
@@ -429,9 +388,9 @@ export default function Staff(props) {
 									required
 									type="text"
 									placeholder="Mot de passe......"
-									value={df?.pwd}
+									value={df?.password}
 									onChange={e => {
-										setDf({ ...df, pwd: e.target.value })
+										setDf({ ...df, password: e.target.value })
 									}}
 								>
 									Mot de passe :
@@ -450,65 +409,26 @@ export default function Staff(props) {
 								</Input>
 								<Input
 									// required
-									type="email"
-									placeholder="Email ......"
-									value={df?.email}
+									type="text"
+									placeholder="NAS ......"
+									value={df?.nas}
 									onChange={e => {
-										setDf({ ...df, email: e.target.value })
+										setDf({ ...df, nas: e.target.value })
 									}}
 								>
-									Email :
+									NAS :
 								</Input>
-								<Input
-									required
-									type="tel"
-									name="telephone"
-									placeholder="Numero de téléphone ......"
-									value={df?.phoneNumber}
-									onChange={e => {
-										setDf({ ...df, phoneNumber: e.target.value })
-									}}
-								>
-									Numero de téléphone :
-								</Input>
-								{df?.role == "medecin" ? (
-									<>
-										{/* <Input
-											required
-											type="text"
-											placeholder="Specialité......"
-											value={df?.speciality}
-											onChange={e => {
-												setDf({ ...df, speciality: e.target.value })
-											}}
-										>
-											Specialité :
-										</Input> */}
-										<Input
-											labels={props?.speciality?.filter(item => !!item.speciality)}
-											label="speciality"
-											required
-											placeholder="Specialité......"
-											type="datalist"
-											value={df?.speciality}
-											name="list_speciality"
-											onChange={e => {
-												setDf({ ...df, speciality: e.target.value })
-											}}
-										>
-											Specialité :
-										</Input>
-									</>
-								) : null}
-								{df?.role == "aux1" || df?.role == "addicted" ? (
+								
+								{df?.role == "employee" ? (
 									<div className="md:col-span-2">
 										<SearchElem
-											list={df?.beneficiaire}
-											dataList={df?.beneficiaireList}
-											label={df.role == "addicted" ? "La personne concernée :" : "Bénéficiaire :"}
+										justOne
+											list={df?.hotel}
+											dataList={df?.hotelList}
+											label={ "Hotel :"}
 											dataPrint="name"
 											listPrint="name"
-											placeholder="Ajouter une seule personne......"
+											placeholder="Ajouter un seul hotel......"
 											minCarac={2}
 											onSearch={async elem => {
 												const body = {
@@ -517,65 +437,35 @@ export default function Staff(props) {
 														id: true,
 													},
 													where: {
-														type: df.role == "addicted" ? "addicted" : "oldPerson",
 														name: { contains: elem ? elem : undefined },
-														active: true,
 													},
 												}
 
-												const res = await fetcher("/api/find/" + "beneficiaire", body, setPopUp)
+												const res = await fetcher("/api/find/" + "hotel", body, setPopUp)
 												if (!res.code) {
-													setDf({ ...df, beneficiaireList: res })
+													setDf({ ...df, hotelList: res })
 												}
 											}}
 											onAdd={elem => {
 												setDf({
 													...df,
-													beneficiaire:
-														df?.beneficiaire && df?.role != "addicted"
-															? [...df?.beneficiaire?.filter(item => item.id != elem.id), elem]
-															: [elem],
+													hotel:elem
 												})
 											}}
 											onDelete={elem => {
 												setDf({
 													...df,
-													beneficiaire: [...df?.beneficiaire?.filter(item => item.id != elem.id)],
+													hotel:undefined,
 												})
 											}}
 										/>
 									</div>
 								) : null}
 							</>
-						)}
+				
 					</div>
-					<div className={cn("flex", step == 1 ? "justify-end" : "justify-between")}>
-						{step == 1 ? (
-							<button
-								type="button"
-								className="text-blue-600 animate-pulse"
-								onClick={() => {
-									if (df?.role) {
-										setStep(step + 1)
-									}
-								}}
-							>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									className="h-8 w-8 my-1 mx-0.5"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
-								>
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth={2}
-										d="M13 5l7 7-7 7M5 5l7 7-7 7"
-									/>
-								</svg>
-							</button>
-						) : (
+					<div className={cn("flex","justify-between")}>
+					
 							<>
 								<button
 									type="button"
@@ -612,7 +502,6 @@ export default function Staff(props) {
 									</svg>
 								</button>
 							</>
-						)}
 					</div>
 				</form>
 			</Modal>
